@@ -1,0 +1,100 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 800,
+  "height": 500,
+  "data": {
+    "url": "https://raw.githubusercontent.com/sengweihan/FIT3179_WK10_HW/main/data/cleaned_bar_suicide.csv"
+  },
+
+  "transform": [
+    {
+      "aggregate": [
+        { "op": "sum", "field": "suicides_no", "as": "suicide number" }
+      ],
+      "groupby": ["country"]
+    },
+    {
+      "window": [
+        {
+          "op": "rank",
+          "as": "rank"
+        }
+      ],
+      "sort": [{ "field": "suicide number", "order": "descending" }]
+    },
+    {
+      "filter": "datum.rank <= 10"
+    }
+  ],
+  "params": [
+    {
+      "name": "country_highlight",
+      "select": { "type": "point", "fields": ["country"] },
+      "bind": "legend"
+    }
+  ],
+
+  "mark": { "type": "bar", "size": 35 },
+
+  "encoding": {
+    "x": {
+      "field": "suicide number",
+      "type": "quantitative",
+      "title": "Suicide Cases"
+    },
+    "y": {
+      "field": "country",
+      "type": "nominal",
+      "title": "Country",
+      "sort": { "field": "suicide number", "op": "sum", "order": "descending" }
+    },
+    "color": {
+      "field": "country",
+      "type": "nominal",
+      "title": "Country",
+      "scale": {
+        "domain": [
+          "Ukraine",
+          "France",
+          "Germany",
+          "Japan",
+          "North Korea",
+          "Poland",
+          "Russia",
+          "Brazil",
+          "United Kingdom",
+          "United States of America"
+        ],
+        "range": [
+          "#8A6A2D",
+          "#FF7F0EFF",
+          "#ff55ff",
+          "#D62728FF",
+          "#9467BDFF",
+          "#652A0E",
+          "#17BECFFF",
+          "#fde725",
+          "#440154",
+          "#3D59AB"
+        ]
+      }
+    },
+    "opacity": {
+      "condition": { "param": "country_highlight", "value": 1 },
+      "value": 0.2
+    },
+    "tooltip": [
+      { "field": "country", "title": "Country", "type": "nominal" },
+      {
+        "field": "suicide number",
+        "type": "quantitative",
+        "title": "Suicide Cases",
+        "format": ","
+      }
+    ]
+  },
+  "config": {
+    "view": { "stroke": null },
+    "axis": { "grid": false }
+  }
+}

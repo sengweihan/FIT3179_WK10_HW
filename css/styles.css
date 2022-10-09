@@ -1,0 +1,39 @@
+#suicide_barchart{
+    left: 100px;
+	right: 100px;
+
+}
+
+#suicide_map{
+    left: 100px;
+	right: 100px;
+
+}
+
+
+.main-page{
+    margin: auto;
+    padding: 50px;
+    padding-top: 30px;
+
+}
+
+
+h1{
+    text-align: center;
+    font-size: 500;
+    font-weight: bold;
+}
+
+h2{
+    text-align: center;
+    font-weight: bold;
+}
+
+.pure-g {
+    margin-bottom: 50px;
+}
+
+.vis_container {
+    width: 100%;
+}
